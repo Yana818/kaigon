@@ -18,34 +18,8 @@ export default function Signup() {
       <div css={mainStyle}>
         <div css={signupStyle}>
           <Typography variant="h6" css={textStyle}>
-            註冊帳號
-            <TextField
-              id="filled-basic"
-              label="輸入 Email"
-              variant="filled"
-              fullWidth
-              css={textFieldStyle}
-            />
-            <TextField
-              id="filled-basic"
-              label="輸入 Password"
-              variant="filled"
-              fullWidth
-              css={textFieldStyle}
-            />
-            <ButtonComponent
-              variant={"contained"}
-              color={"error"}
-              style={btnstyle}
-              btnText={"註冊"}
-            />
+            立即登入
           </Typography>
-          <div css={dividerContainerStyle}>
-            <Divider css={dividerStyle} />
-            <Typography variant="caption" css={dividertextStyle}>
-              或是
-            </Typography>
-          </div>
           <ButtonComponent
             variant={"contained"}
             startIcon={<FacebookOutlinedIcon />}
@@ -64,15 +38,48 @@ export default function Signup() {
             style={[btnstyle, googlebtnStyle]}
             btnText={"使用Apple登入"}
           />
+          <div css={dividerContainerStyle}>
+            <Divider css={dividerStyle} />
+            <Typography variant="caption" css={dividertextStyle}>
+              或是
+            </Typography>
+          </div>
+          <TextField
+            id="filled-basic"
+            label="輸入 Email"
+            variant="filled"
+            fullWidth
+            css={textFieldStyle}
+          />
+          <TextField
+            id="filled-basic"
+            label="輸入 Password"
+            variant="filled"
+            fullWidth
+            css={textFieldStyle}
+          />
+          <FormControlLabel
+            control={<Checkbox defaultChecked />}
+            label="顯示密碼"
+          />
+          <ButtonComponent
+            variant={"contained"}
+            color={"error"}
+            style={btnstyle}
+            btnText={"登入"}
+          />
+          <div css={forgetPasswordStyle}>
+            <ButtonComponent color={"inherit"} btnText={"忘記密碼？"} />
+          </div>
           <div>
             <Typography variant="body2" css={[textStyle, textColor("#d32f2f")]}>
-              已經有帳號嗎？
+              還沒有帳號嗎？
             </Typography>
             <ButtonComponent
               variant={"outlined"}
               color={"error"}
               style={btnstyle}
-              btnText={"前往登入"}
+              btnText={"前往註冊"}
               href={"/Signup"}
             />
           </div>
