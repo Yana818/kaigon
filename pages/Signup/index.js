@@ -1,37 +1,34 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
-import Link from "next/link";
 import Typography from "@mui/material/Typography";
-import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
-import GoogleIcon from "@mui/icons-material/Google";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import ButtonComponent from "../../root/components/ButtonComponent";
-import AppleIcon from "@mui/icons-material/Apple";
+import LoginWithApple from "../../root/components/LoginWithApple";
+import LoginWithFB from "../../root/components/LoginWithFB";
+import LoginWithGoogle from "../../root/components/LoginWithGoogle";
+import InputEmail from "../../root/components/InputEmail";
+import InputPassword from "../../root/components/InputPassword";
 
 export default function Signup() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div css={cotainerStyle}>
       <div css={mainStyle}>
         <div css={signupStyle}>
           <Typography variant="h6" css={textStyle}>
             註冊帳號
-            <TextField
-              id="filled-basic"
-              label="輸入 Email"
-              variant="filled"
-              fullWidth
-              css={textFieldStyle}
+            <InputEmail
+              style={textFieldStyle}
+              email={email}
+              setEmail={setEmail}
             />
-            <TextField
-              id="filled-basic"
-              label="輸入 Password"
-              variant="filled"
-              fullWidth
-              css={textFieldStyle}
+            <InputPassword
+              style={textFieldStyle}
+              password={password}
+              setPassword={setPassword}
             />
             <ButtonComponent
               variant={"contained"}
@@ -46,24 +43,9 @@ export default function Signup() {
               或是
             </Typography>
           </div>
-          <ButtonComponent
-            variant={"contained"}
-            startIcon={<FacebookOutlinedIcon />}
-            style={[btnstyle, fbbtnStyle]}
-            btnText={"使用facebook登入"}
-          />
-          <ButtonComponent
-            variant={"outlined"}
-            startIcon={<GoogleIcon />}
-            style={[btnstyle, googlebtnStyle]}
-            btnText={"使用google登入"}
-          />
-          <ButtonComponent
-            variant={"outlined"}
-            startIcon={<AppleIcon />}
-            style={[btnstyle, googlebtnStyle]}
-            btnText={"使用Apple登入"}
-          />
+          <LoginWithFB style={[btnstyle, fbbtnStyle]} />
+          <LoginWithGoogle style={[btnstyle, googlebtnStyle]} />
+          <LoginWithApple style={[btnstyle, googlebtnStyle]} />
           <div>
             <Typography variant="body2" css={[textStyle, textColor("#d32f2f")]}>
               已經有帳號嗎？

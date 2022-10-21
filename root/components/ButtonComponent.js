@@ -8,6 +8,7 @@ export default function ButtonComponent({
   btnText,
   color,
   href,
+  onClick,
 }) {
   return (
     <Button
@@ -16,6 +17,7 @@ export default function ButtonComponent({
       css={style}
       color={color}
       href={href}
+      onClick={onClick}
     >
       {btnText}
     </Button>
