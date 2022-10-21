@@ -50,19 +50,19 @@ export default function Signup() {
             variant={"contained"}
             startIcon={<FacebookOutlinedIcon />}
             style={[btnstyle, fbbtnStyle]}
-            btnText={"使用facebook登入"}
+            btnText={"使用 facebook 註冊"}
           />
           <ButtonComponent
             variant={"outlined"}
             startIcon={<GoogleIcon />}
             style={[btnstyle, googlebtnStyle]}
-            btnText={"使用google登入"}
+            btnText={"使用 google 註冊"}
           />
           <ButtonComponent
             variant={"outlined"}
             startIcon={<AppleIcon />}
             style={[btnstyle, googlebtnStyle]}
-            btnText={"使用Apple登入"}
+            btnText={"使用 Apple 註冊"}
           />
           <div>
             <Typography variant="body2" css={[textStyle, textColor("#d32f2f")]}>

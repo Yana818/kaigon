@@ -12,7 +12,7 @@ import Checkbox from "@mui/material/Checkbox";
 import ButtonComponent from "../../root/components/ButtonComponent";
 import AppleIcon from "@mui/icons-material/Apple";
 
-export default function Signup() {
+export default function Login() {
   return (
     <div css={cotainerStyle}>
       <div css={mainStyle}>
