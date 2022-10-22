@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import ButtonComponent from "../../root/components/ButtonComponent";
 import LoginWithApple from "../../root/components/LoginWithApple";
 import LoginWithFB from "../../root/components/LoginWithFB";
@@ -14,6 +15,10 @@ import InputPassword from "../../root/components/InputPassword";
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const imgUrl = 'https://kaigon.sidesideeffect.io/api/auth/captcha/6a05ec36-526c-41e1-86d9-0df9a0e18348/image';
+  const fetchSignupAPI = (inputEmail, inputPassword) => {
+    console.log(inputEmail, inputPassword);
+  };
   return (
     <div css={cotainerStyle}>
       <div css={mainStyle}>
@@ -30,11 +35,24 @@ export default function Signup() {
               password={password}
               setPassword={setPassword}
             />
+            <div css={CaptchaFieldStyle}>
+              <TextField
+                id="outlined-basic"
+                label="輸入驗證碼"
+                variant="outlined"
+              />
+              <div css={CaptchaStyle(imgUrl)}>
+              </div>
+              <RefreshIcon 
+                css={refreshIconStyle}
+              />
+            </div>
             <ButtonComponent
               variant={"contained"}
               color={"error"}
               style={btnstyle}
               btnText={"註冊"}
+              onClick={() => fetchSignupAPI(email, password)}
             />
           </Typography>
           <div css={dividerContainerStyle}>
@@ -146,3 +164,22 @@ const textColor = (color) =>
   css`
     color: ${color};
   `;
+
+const CaptchaFieldStyle = css`
+  margin-bottom: 16px;
+  display: flex;
+`;
+
+const CaptchaStyle = (url) => 
+  css`
+    flex-grow: 2;
+    background-image: url(${url});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 300%;
+  `;
+
+const refreshIconStyle = css`
+    margin: auto;
+    cursor: pointer;
+`
