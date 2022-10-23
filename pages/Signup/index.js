@@ -1,24 +1,39 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
-import RefreshIcon from '@mui/icons-material/Refresh';
+import RefreshIcon from "@mui/icons-material/Refresh";
 import ButtonComponent from "../../root/components/ButtonComponent";
 import LoginWithApple from "../../root/components/LoginWithApple";
 import LoginWithFB from "../../root/components/LoginWithFB";
 import LoginWithGoogle from "../../root/components/LoginWithGoogle";
 import InputEmail from "../../root/components/InputEmail";
 import InputPassword from "../../root/components/InputPassword";
+import { getCaptchaUuid, getCatptchaImage } from "../../root/api/signup";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const imgUrl = 'https://kaigon.sidesideeffect.io/api/auth/captcha/6a05ec36-526c-41e1-86d9-0df9a0e18348/image';
+  const [imgUrl, setImgurl] = useState("");
+
+  const url = (captchaUuid) => {
+    return `https://kaigon.sidesideeffect.io/api/auth/captcha/${captchaUuid}/image`;
+  };
+  
   const fetchSignupAPI = (inputEmail, inputPassword) => {
     console.log(inputEmail, inputPassword);
   };
+
+  useEffect(() => {
+    async function init() {
+      const { uuid } = await getCaptchaUuid();
+      setImgurl(url(uuid));
+    }
+    init();
+  }, []);
+
   return (
     <div css={cotainerStyle}>
       <div css={mainStyle}>
@@ -41,11 +56,8 @@ export default function Signup() {
                 label="輸入驗證碼"
                 variant="outlined"
               />
-              <div css={CaptchaStyle(imgUrl)}>
-              </div>
-              <RefreshIcon 
-                css={refreshIconStyle}
-              />
+              <div css={CaptchaStyle(imgUrl)}></div>
+              <RefreshIcon css={refreshIconStyle} />
             </div>
             <ButtonComponent
               variant={"contained"}
@@ -170,7 +182,7 @@ const CaptchaFieldStyle = css`
   display: flex;
 `;
 
-const CaptchaStyle = (url) => 
+const CaptchaStyle = (url) =>
   css`
     flex-grow: 2;
     background-image: url(${url});
@@ -180,6 +192,6 @@ const CaptchaStyle = (url) =>
   `;
 
 const refreshIconStyle = css`
-    margin: auto;
-    cursor: pointer;
-`
+  margin: auto;
+  cursor: pointer;
+`;

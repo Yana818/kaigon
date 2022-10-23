@@ -5,6 +5,7 @@ export default function InputPassword({
   style,
   password,
   setPassword,
+  label = "輸入 Password",
   showPassword = true,
   error,
   errorType,
@@ -16,7 +17,7 @@ export default function InputPassword({
   return (
     <TextField
       id="filled-basic"
-      label="輸入 Password"
+      label={label}
       variant="filled"
       fullWidth
       css={style}
