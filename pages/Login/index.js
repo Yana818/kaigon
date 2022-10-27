@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { css } from "@emotion/react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import ButtonComponent from "../../root/components/ButtonComponent";
@@ -17,14 +16,24 @@ import InputResetPassword from "./InputResetPassword";
 import { logIn } from "../../root/api/logIn";
 
 export default function Login() {
+  const CaptChaRef = useRef();
   const [email, setEmail] = useState("");
-  const [forgetPasswordEmail, setForgetPasswordEmail] = useState("");
   const [password, setPassword] = useState("");
   const [openForgetPassword, setOpenForgertPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
 
-  const handleLogIn = () => {
-    console.log(1111);
+  const handleLogIn = async () => {
+    console.log("prepare To login");
+    // if (email.length === 0 || password.length === 0) {
+    //   return;
+    // }
+    // await logIn({});
+    if (CaptChaRef && CaptChaRef.current) {
+      const aaa = CaptChaRef.current.getCaptchaUuid();
+      const bbb = CaptChaRef.current.getCaptcha();
+      console.log("aaa", aaa);
+      console.log("bbb", bbb);
+    }
   };
 
   return (
@@ -65,7 +74,7 @@ export default function Login() {
               }
               label="顯示密碼"
             />
-            <CaptchaComponent />
+            <CaptchaComponent ref={CaptChaRef} />
             <ButtonComponent
               variant={"contained"}
               color={"error"}

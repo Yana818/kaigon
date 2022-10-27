@@ -1,4 +1,4 @@
-import { fetches, kiagonApiFetchOpts, fetchOpts } from "./common";
+import { fetches, kiagonApiFetchOpts } from "./common";
 
 export function getCaptchaUuid(data) {
   return fetches(`/auth/captcha`, kiagonApiFetchOpts());

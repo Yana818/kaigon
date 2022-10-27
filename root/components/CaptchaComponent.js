@@ -1,14 +1,28 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useImperativeHandle } from "react";
 import { css } from "@emotion/react";
 import TextField from "@mui/material/TextField";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { getCaptchaUuid, reloadCaptchaImage } from "../../root/api/signup";
 
-export default function CaptchaComponent() {
+const CaptchaComponent = React.forwardRef((props, ref) => {
   const [imgUrl, setImgurl] = useState("");
   const [captchaUuid, setCaptchaUuid] = useState("");
+  const [captcha, setCaptcha] = useState("");
   const [qs, setQs] = useState(1);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getCaptchaUuid: () => {
+        return captchaUuid;
+      },
+      getCaptcha: () => {
+        return captcha;
+      },
+    }),
+    [captchaUuid, captcha]
+  );
 
   const url = (captchaUuid, qs) => {
     return `https://kaigon.sidesideeffect.io/api/auth/captcha/${captchaUuid}/image?${qs}`;
@@ -36,7 +50,12 @@ export default function CaptchaComponent() {
 
   return (
     <div css={CaptchaFieldStyle}>
-      <TextField id="outlined-basic" label="輸入驗證碼" variant="outlined" />
+      <TextField
+        id="outlined-basic"
+        label="輸入驗證碼"
+        variant="outlined"
+        onChange={(e) => setCaptcha(e.target.value)}
+      />
       <div css={CaptchaStyle(imgUrl)}></div>
       <RefreshIcon
         css={refreshIconStyle}
@@ -46,7 +65,10 @@ export default function CaptchaComponent() {
       />
     </div>
   );
-}
+});
+CaptchaComponent.displayName = "CaptchaComponent";
+
+export default CaptchaComponent;
 
 const CaptchaFieldStyle = css`
   margin-bottom: 16px;
