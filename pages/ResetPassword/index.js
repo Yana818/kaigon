@@ -1,18 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import { css } from "@emotion/react";
-import Link from "next/link";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import ButtonComponent from "../../root/components/ButtonComponent";
-import LoginWithApple from "../../root/components/LoginWithApple";
-import LoginWithFB from "../../root/components/LoginWithFB";
-import LoginWithGoogle from "../../root/components/LoginWithGoogle";
-import InputEmail from "../../root/components/InputEmail";
 import InputPassword from "../../root/components/InputPassword";
+import CaptchaComponent from "../../root/components/captchaComponent";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -40,6 +34,7 @@ export default function ResetPassword() {
               showPassword={showPassword}
               label={"再次輸入你的 Password"}
             />
+            <CaptchaComponent />
             <FormControlLabel
               control={
                 <Checkbox

@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import { css } from "@emotion/react";
-import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
@@ -13,13 +12,21 @@ import LoginWithFB from "../../root/components/LoginWithFB";
 import LoginWithGoogle from "../../root/components/LoginWithGoogle";
 import InputEmail from "../../root/components/InputEmail";
 import InputPassword from "../../root/components/InputPassword";
+import CaptchaComponent from "../../root/components/captchaComponent";
+import InputResetPassword from "./InputResetPassword";
+import { logIn } from "../../root/api/logIn";
 
 export default function Login() {
   const [email, setEmail] = useState("");
+  const [forgetPasswordEmail, setForgetPasswordEmail] = useState("");
   const [password, setPassword] = useState("");
   const [openForgetPassword, setOpenForgertPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
-  
+
+  const handleLogIn = () => {
+    console.log(1111);
+  };
+
   return (
     <>
       <div css={[cotainerStyle, openForgetPassword && blurBg]}>
@@ -58,11 +65,13 @@ export default function Login() {
               }
               label="顯示密碼"
             />
+            <CaptchaComponent />
             <ButtonComponent
               variant={"contained"}
               color={"error"}
               style={btnstyle}
               btnText={"登入"}
+              onClick={() => handleLogIn()}
             />
             <div css={forgetPasswordStyle}>
               <ButtonComponent
@@ -90,18 +99,15 @@ export default function Login() {
         </div>
       </div>
       {openForgetPassword && (
-        <div css={forgetPasswordDialogStyle}>
+        <InputResetPassword setOpenForgertPassword={setOpenForgertPassword} />
+        /* <div css={forgetPasswordDialogStyle}>
           <Typography variant="h6" css={textStyle}>
             輸入您註冊的 Email
           </Typography>
-          <TextField
-            id="filled-basic"
-            label="輸入 Email"
-            variant="filled"
-            fullWidth
-            css={textFieldStyle}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+          <InputEmail
+            style={textFieldStyle}
+            email={forgetPasswordEmail}
+            setEmail={setForgetPasswordEmail}
           />
           <div css={btnGropuStyle}>
             <ButtonComponent
@@ -115,9 +121,10 @@ export default function Login() {
               variant={"contained"}
               style={[btnstyle, unsetWidthAndMargin]}
               btnText={"發送重設密碼信"}
+              onClick={() => console.log("123")}
             />
           </div>
-        </div>
+        </div> */
       )}
     </>
   );

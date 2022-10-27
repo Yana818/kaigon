@@ -1,38 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import TextField from "@mui/material/TextField";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import ButtonComponent from "../../root/components/ButtonComponent";
 import LoginWithApple from "../../root/components/LoginWithApple";
 import LoginWithFB from "../../root/components/LoginWithFB";
 import LoginWithGoogle from "../../root/components/LoginWithGoogle";
 import InputEmail from "../../root/components/InputEmail";
 import InputPassword from "../../root/components/InputPassword";
-import { getCaptchaUuid, getCatptchaImage } from "../../root/api/signup";
+import CaptchaComponent from "../../root/components/captchaComponent";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [imgUrl, setImgurl] = useState("");
-
-  const url = (captchaUuid) => {
-    return `https://kaigon.sidesideeffect.io/api/auth/captcha/${captchaUuid}/image`;
-  };
-  
   const fetchSignupAPI = (inputEmail, inputPassword) => {
     console.log(inputEmail, inputPassword);
   };
-
-  useEffect(() => {
-    async function init() {
-      const { uuid } = await getCaptchaUuid();
-      setImgurl(url(uuid));
-    }
-    init();
-  }, []);
 
   return (
     <div css={cotainerStyle}>
@@ -50,15 +34,7 @@ export default function Signup() {
               password={password}
               setPassword={setPassword}
             />
-            <div css={CaptchaFieldStyle}>
-              <TextField
-                id="outlined-basic"
-                label="輸入驗證碼"
-                variant="outlined"
-              />
-              <div css={CaptchaStyle(imgUrl)}></div>
-              <RefreshIcon css={refreshIconStyle} />
-            </div>
+            <CaptchaComponent />
             <ButtonComponent
               variant={"contained"}
               color={"error"}
