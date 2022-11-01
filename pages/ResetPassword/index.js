@@ -7,11 +7,29 @@ import Checkbox from "@mui/material/Checkbox";
 import ButtonComponent from "../../root/components/ButtonComponent";
 import InputPassword from "../../root/components/InputPassword";
 import CaptchaComponent from "../../root/components/captchaComponent";
+import { resetPassword } from "../../root/api/logIn";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
+  const [error, setError] = useState(false);
+  const [errorType, setErrorType] = useState("");
+  const handleSubmit = async () => {
+    if (password !== confirmPassword) {
+      setError(true);
+      setErrorType("notSame");
+      return;
+    }
+    await resetPassword({
+      email,
+      password,
+      token,
+      code,
+      captchaUuid,
+      captchaCode,
+    });
+  };
 
   return (
     <>
@@ -33,6 +51,8 @@ export default function ResetPassword() {
               setPassword={setConfirmPassword}
               showPassword={showPassword}
               label={"再次輸入你的 Password"}
+              error={error}
+              errorType={errorType}
             />
             <CaptchaComponent />
             <FormControlLabel
@@ -50,6 +70,7 @@ export default function ResetPassword() {
               color={"error"}
               style={btnstyle}
               btnText={"確定"}
+              onClick={handleSubmit}
             />
           </div>
         </div>

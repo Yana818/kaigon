@@ -14,3 +14,14 @@ export function logIn(data) {
     kiagonApiFetchOpts({ method: methods.POST, body: data })
   );
 }
+
+export function resetPassword(data) {
+  return fetches(
+    `/account/info/password/reset`,
+    kiagonApiFetchOpts({ method: methods.PATCH, body: data })
+  );
+}
+
+export function refreshAuthToken(qs) {
+  return fetches(`/auth/session/token/refresh?${qs}`, kiagonApiFetchOpts());
+}

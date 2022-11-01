@@ -16,7 +16,7 @@ export default function InputResetPassword({ setOpenForgertPassword }) {
     }
     await sendForgetPasswordEmail({
       email: forgetPasswordEmail,
-      path: "http://localhost:3000/ResetPassword",
+      path: "/ResetPassword",
     });
   };
 

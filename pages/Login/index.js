@@ -23,17 +23,16 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(true);
 
   const handleLogIn = async () => {
-    console.log("prepare To login");
-    // if (email.length === 0 || password.length === 0) {
-    //   return;
-    // }
-    // await logIn({});
-    if (CaptChaRef && CaptChaRef.current) {
-      const aaa = CaptChaRef.current.getCaptchaUuid();
-      const bbb = CaptChaRef.current.getCaptcha();
-      console.log("aaa", aaa);
-      console.log("bbb", bbb);
+    if (email.length === 0 || password.length === 0) {
+      return;
     }
+    let captchaUuid = "";
+    let captchaCode = "";
+    if (CaptChaRef && CaptChaRef.current) {
+      captchaUuid = CaptChaRef.current.getCaptchaUuid();
+      captchaCode = CaptChaRef.current.getCaptcha();
+    }
+    await logIn({ email, password, captchaUuid, captchaCode });
   };
 
   return (

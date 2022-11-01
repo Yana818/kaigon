@@ -35,5 +35,7 @@ const errorMessage = (errorType) => {
     return "密碼需8個字";
   } else if (errorType === "empty") {
     return "需輸入密碼";
+  } else if (errorType === "notSame") {
+    return "密碼不一致";
   }
 };
