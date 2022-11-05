@@ -41,7 +41,7 @@ export async function fetches(path, optionsPromise, dataKeys = "data") {
       if (resp.httpStatus !== 200) {
         throw resp;
       }
-      return resp.payload[dataKeys];
+      return resp;
     });
 }
 
