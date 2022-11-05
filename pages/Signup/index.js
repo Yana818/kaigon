@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { css } from "@emotion/react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import ButtonComponent from "../../root/components/ButtonComponent";
 import LoginWithApple from "../../root/components/LoginWithApple";
 import LoginWithFB from "../../root/components/LoginWithFB";
@@ -10,17 +14,68 @@ import LoginWithGoogle from "../../root/components/LoginWithGoogle";
 import InputEmail from "../../root/components/InputEmail";
 import InputPassword from "../../root/components/InputPassword";
 import CaptchaComponent from "../../root/components/captchaComponent";
+import { signUp } from "../../root/api/signup";
 
 export default function Signup() {
+  const CaptChaRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const fetchSignupAPI = (inputEmail, inputPassword) => {
+  const [showPassword, setShowPassword] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+  const [severity, setSeverity] = useState(false);
+  const [alertTitleText, setAlertTitleText] = useState("");
+  const [alertText, setAlertText] = useState("");
+
+
+  const handleSignup = async (inputEmail, inputPassword) => {
     console.log(inputEmail, inputPassword);
+    let captchaUuid;
+    let captchaCode;
+    if (CaptChaRef && CaptChaRef.current) {
+      captchaUuid = CaptChaRef.current.getCaptchaUuid();
+      captchaCode = CaptChaRef.current.getCaptchaCode();
+      console.log("captchaUuid", captchaUuid);
+      console.log("captcha", captchaCode);
+    }
+    const data = {
+      email: inputEmail,
+      password: inputPassword,
+      captchaUuid,
+      captchaCode,
+    };
+
+    try {
+      const res = await signUp(data);
+      console.log(res);
+      if (res.httpStatus !== 200) {
+        console.log(`status is not 200: ${res}`);
+      } else {
+        console.log("Sign up done");
+        setEmail("");
+        setPassword("");
+      }
+      setSeverity("success")
+      setAlertTitleText("註冊成功")
+      setAlertText("認證信寄送到信箱囉，快去信箱看看吧！")
+    } catch (error) {
+      console.log(`Error: ${error}`);
+
+      // setAlertTitleText("註冊成功")
+      // setAlertText("認證信寄送到信箱囉，快去信箱看看吧！")
+    } finally {
+      setShowAlert(true);
+    }
   };
 
   return (
     <div css={cotainerStyle}>
       <div css={mainStyle}>
+        {showAlert && (
+          <Alert css={alertStyle} severity={severity}>
+            <AlertTitle>{alertTitleText}</AlertTitle>
+            {alertText}
+          </Alert>
+        )}
         <div css={signupStyle}>
           <Typography variant="h6" css={textStyle}>
             註冊帳號
@@ -33,14 +88,25 @@ export default function Signup() {
               style={textFieldStyle}
               password={password}
               setPassword={setPassword}
+              showPassword={showPassword}
             />
-            <CaptchaComponent />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  defaultChecked
+                  value={showPassword}
+                  onChange={(e) => setShowPassword(e.target.checked)}
+                />
+              }
+              label="顯示密碼"
+            />
+            <CaptchaComponent ref={CaptChaRef} />
             <ButtonComponent
               variant={"contained"}
               color={"error"}
               style={btnstyle}
               btnText={"註冊"}
-              onClick={() => fetchSignupAPI(email, password)}
+              onClick={() => handleSignup(email, password)}
             />
           </Typography>
           <div css={dividerContainerStyle}>
@@ -81,6 +147,12 @@ const mainStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const alertStyle = css`
+  position: fixed;
+  z-index: 5;
+  top: 5vh;
 `;
 
 const signupStyle = css`

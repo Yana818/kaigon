@@ -8,7 +8,7 @@ import { getCaptchaUuid, reloadCaptchaImage } from "../../root/api/signup";
 const CaptchaComponent = React.forwardRef((props, ref) => {
   const [imgUrl, setImgurl] = useState("");
   const [captchaUuid, setCaptchaUuid] = useState("");
-  const [captcha, setCaptcha] = useState("");
+  const [captchaCode, setCaptchaCode] = useState("");
   const [qs, setQs] = useState(1);
 
   useImperativeHandle(
@@ -17,11 +17,11 @@ const CaptchaComponent = React.forwardRef((props, ref) => {
       getCaptchaUuid: () => {
         return captchaUuid;
       },
-      getCaptcha: () => {
-        return captcha;
+      getCaptchaCode: () => {
+        return captchaCode;
       },
     }),
-    [captchaUuid, captcha]
+    [captchaUuid, captchaCode]
   );
 
   const url = (captchaUuid, qs) => {
@@ -30,7 +30,11 @@ const CaptchaComponent = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     async function init() {
-      const { uuid } = await getCaptchaUuid();
+      const {
+        payload: {
+          data: { uuid },
+        },
+      } = await getCaptchaUuid();
       setCaptchaUuid(uuid);
       setImgurl(url(uuid));
     }
@@ -54,7 +58,7 @@ const CaptchaComponent = React.forwardRef((props, ref) => {
         id="outlined-basic"
         label="輸入驗證碼"
         variant="outlined"
-        onChange={(e) => setCaptcha(e.target.value)}
+        onChange={(e) => setCaptchaCode(e.target.value)}
       />
       <div css={CaptchaStyle(imgUrl)}></div>
       <RefreshIcon

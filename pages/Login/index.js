@@ -30,7 +30,7 @@ export default function Login() {
     // await logIn({});
     if (CaptChaRef && CaptChaRef.current) {
       const aaa = CaptChaRef.current.getCaptchaUuid();
-      const bbb = CaptChaRef.current.getCaptcha();
+      const bbb = CaptChaRef.current.getCaptchaCode();
       console.log("aaa", aaa);
       console.log("bbb", bbb);
     }
