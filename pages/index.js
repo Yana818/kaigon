@@ -6,7 +6,7 @@ import Header from "../root/common/header";
 
 export default function Home() {
   return (
-    <Provider store={store}>
+    <Provider store={store} >
       <div>
         <Head>
           <title>專案</title>
