@@ -12,7 +12,7 @@ export const authSlice = createSlice({
   reducers: {
 
     // Action to set the authentication status
-    changeAuthState(state, action) {
+    setAuthState(state, action) {
       state.authState = action.payload;
     },
 
@@ -29,8 +29,8 @@ export const authSlice = createSlice({
   },
 });
 
-export const { changeAuthState } = authSlice.actions;
+export const { setAuthState } = authSlice.actions;
 
-// export const changeAuthState = (state) => state.auth.authState;
+export const selectAuthState = (state) => state.auth.authState;
 
 export default authSlice.reducer;
