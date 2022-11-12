@@ -6,14 +6,12 @@ import Divider from "@mui/material/Divider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import ButtonComponent from "../../root/components/ButtonComponent";
-import LoginWithApple from "../../root/components/LoginWithApple";
-import LoginWithFB from "../../root/components/LoginWithFB";
 import LoginWithGoogle from "../../root/components/LoginWithGoogle";
 import InputEmail from "../../root/components/InputEmail";
 import InputPassword from "../../root/components/InputPassword";
 import CaptchaComponent from "../../root/components/captchaComponent";
 import InputResetPassword from "./InputResetPassword";
-import { logIn } from "../../root/api/logIn";
+import { logIn, refreshAuthToken } from "../../root/api/logIn";
 
 export default function Login() {
   const CaptChaRef = useRef();
@@ -30,9 +28,10 @@ export default function Login() {
     let captchaCode = "";
     if (CaptChaRef && CaptChaRef.current) {
       captchaUuid = CaptChaRef.current.getCaptchaUuid();
-      captchaCode = CaptChaRef.current.getCaptcha();
+      captchaCode = CaptChaRef.current.getCaptchaCode();
     }
     await logIn({ email, password, captchaUuid, captchaCode });
+    await refreshAuthToken();
   };
 
   return (
@@ -43,9 +42,7 @@ export default function Login() {
             <Typography variant="h6" css={textStyle}>
               立即登入
             </Typography>
-            <LoginWithFB style={[btnstyle, fbbtnStyle]} />
             <LoginWithGoogle style={[btnstyle, googlebtnStyle]} />
-            <LoginWithApple style={[btnstyle, googlebtnStyle]} />
             <div css={dividerContainerStyle}>
               <Divider css={dividerStyle} />
               <Typography variant="caption" css={dividertextStyle}>
@@ -108,31 +105,6 @@ export default function Login() {
       </div>
       {openForgetPassword && (
         <InputResetPassword setOpenForgertPassword={setOpenForgertPassword} />
-        /* <div css={forgetPasswordDialogStyle}>
-          <Typography variant="h6" css={textStyle}>
-            輸入您註冊的 Email
-          </Typography>
-          <InputEmail
-            style={textFieldStyle}
-            email={forgetPasswordEmail}
-            setEmail={setForgetPasswordEmail}
-          />
-          <div css={btnGropuStyle}>
-            <ButtonComponent
-              variant={"contained"}
-              color={"error"}
-              style={[btnstyle, unsetWidthAndMargin, cancelBtn]}
-              btnText={"取消"}
-              onClick={() => setOpenForgertPassword(false)}
-            />
-            <ButtonComponent
-              variant={"contained"}
-              style={[btnstyle, unsetWidthAndMargin]}
-              btnText={"發送重設密碼信"}
-              onClick={() => console.log("123")}
-            />
-          </div>
-        </div> */
       )}
     </>
   );
