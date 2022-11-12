@@ -18,6 +18,7 @@ export function kiagonApiFetchOpts({
 } = {}) {
   return {
     method,
+    credentials : "include",
     headers: new Headers({
       ...(formData
         ? {}

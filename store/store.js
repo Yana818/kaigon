@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { composeWithDevTools } from "redux-devtools-extension";
-import auth from "./auth";
+import auth from "./authSlice";
 
 const combinedReducer = combineReducers({
   auth,
@@ -13,7 +13,7 @@ const reducer = (state, action) => {
     const nextState = {
       ...state,
       auth: {
-        auth: state.auth.auth,
+        auth: state.auth.value,
       },
     };
     return nextState;
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
 
 const makeStore = () => {
   return configureStore(
-    { reducer: { reducer } },
+    { reducer},
     composeWithDevTools(applyMiddleware())
   );
 };
